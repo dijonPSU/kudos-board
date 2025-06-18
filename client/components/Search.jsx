@@ -1,15 +1,27 @@
-import { React } from 'react';
+import React, { useState } from 'react';
 
+export default function Search() {
+    const [search, setSearch] = useState('');
 
-const Search = () => {
+    const handleSearch = (e) => {
+        setSearch(e.target.value);
+        console.log(e.target.value);
+    }
+
+    const handleSubmit = () => {
+        console.log("Submit clicked");
+    }
+
+    const handleClear = () => {
+        setSearch('');
+        console.log("Clear clicked");
+    }
+
     return (
         <div className="search-bar">
-            <input placeholder="Search boards"></input>
-            <button>Submit</button>
-            <button>Clear</button>
+            <input value={search} onChange={handleSearch} placeholder="Search boards" />
+            <button onClick={handleSubmit}>Submit</button>
+            <button onClick={handleClear}>Clear</button>
         </div>
     )
 }
-
-
-export default Search

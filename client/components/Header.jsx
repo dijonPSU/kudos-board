@@ -9,7 +9,7 @@ const Header = () => {
             <img src="./src/assets/react.svg" alt="react-logo" />
             <h1>Kudos Board</h1>
         </div>
-        
+
         <Search />
         <Category />
     </header>

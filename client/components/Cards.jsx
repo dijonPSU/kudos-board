@@ -2,6 +2,7 @@ import { React } from 'react';
 
 
 const Cards = () => {
+
   return (
     <div className="card-container">
         <div className="card">
@@ -12,8 +13,8 @@ const Cards = () => {
             </div>
 
             <div className = "card-buttons">
-                <button>View Board</button>
-                <button>Delete Board</button>
+                <button className="cardButton">View Board</button>
+                <button className="cardButton">Delete Board</button>
             </div>
         </div>
 
