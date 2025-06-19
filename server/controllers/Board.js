@@ -1,5 +1,4 @@
 const { PrismaClient } = require("../generated/prisma");
-
 const prisma = new PrismaClient();
 
 module.exports = {
@@ -16,7 +15,7 @@ module.exports = {
     async getBoardById(id) {
         try {
             const board = await prisma.board.findUnique({
-                where: { board_id: parseInt(id) }
+                where: { board_id: parseInt(id) }, include: {cards: true}
             });
             return board;
         } catch (error) {
@@ -27,16 +26,10 @@ module.exports = {
 
     async createBoard(name, category, author) {
         try {
-            const board = await prisma.board.create({
-                data: {
-                    title: name,
-                    category,
-                    owner: author
-                }
-            });
+            console.log("Creating board with:", { name, category, author });
+            const board = await prisma.board.create({data: {title: name, category, owner: author }});
             return board;
         } catch (error) {
-            console.error("Error in createBoard:", error);
             throw error;
         }
     },
@@ -52,4 +45,6 @@ module.exports = {
             throw error;
         }
     }
+
+
 }
