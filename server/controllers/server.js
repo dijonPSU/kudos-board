@@ -3,6 +3,7 @@ const cors = require('cors');
 const server = express();
 const Board = require('./Board');
 const Card = require('./Card');
+const Comment = require('./Comment');
 
 server.use(express.json());
 server.use(cors());
@@ -112,6 +113,39 @@ server.delete('/card/:id', async (req, res, next) => {
         next({status: 500, message: 'Error deleting card'});
     }
 })
+
+// Comment routes
+server.get('/card/:id/comments', async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const comments = await Comment.getCommentsByCardId(id);
+        return res.status(200).json(comments);
+    } catch (err) {
+        next({status: 500, message: 'Error getting comments'});
+    }
+});
+
+server.post('/card/:id/comments', async (req, res, next) => {
+    const { id } = req.params;
+    const { message, author } = req.body;
+    try {
+        const comment = await Comment.createComment(message, author, id);
+        return res.status(201).json(comment);
+    } catch (err) {
+        console.error('Error creating comment:', err);
+        next({status: 500, message: err.message || 'Error creating comment'});
+    }
+});
+
+server.delete('/comment/:id', async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const comment = await Comment.deleteComment(id);
+        return res.status(200).json(comment);
+    } catch (err) {
+        next({status: 500, message: 'Error deleting comment'});
+    }
+});
 
 
 server.use((err, req, res, next) => {

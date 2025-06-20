@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getRequest, postRequest, putRequest, deleteRequest } from './webRequests';
+import CommentModal from './CommentModal';
 import './BoardDetails.css';
 
 const GIPHY_API_KEY = 'snp2aFURx0Xl1SiINTH19NRDAA1fu26H';
@@ -19,6 +20,7 @@ const BoardDetails = () => {
     const [gifSearchTerm, setGifSearchTerm] = useState('');
     const [gifSearchResults, setGifSearchResults] = useState([]);
     const [isSearchingGifs, setIsSearchingGifs] = useState(false);
+    const [selectedCard, setSelectedCard] = useState(null);
 
     useEffect(() => {
         fetchBoardDetails();
@@ -282,6 +284,13 @@ const BoardDetails = () => {
                                         </div>
                                         <div className="card-buttons">
                                             <button
+                                                className="comment-button"
+                                                onClick={() => setSelectedCard(card)}
+                                                title="View and add comments"
+                                            >
+                                                💬
+                                            </button>
+                                            <button
                                                 className={`pin-button ${card.isPinned ? 'pinned' : ''}`}
                                                 onClick={() => handlePinCard(card.card_id, card.isPinned)}
                                                 title={card.isPinned ? "Unpin card" : "Pin card"}
@@ -306,6 +315,13 @@ const BoardDetails = () => {
                     )}
                 </div>
             </div>
+
+            {selectedCard && (
+                <CommentModal
+                    card={selectedCard}
+                    onClose={() => setSelectedCard(null)}
+                />
+            )}
         </div>
     );
 };

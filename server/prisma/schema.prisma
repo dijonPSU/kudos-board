@@ -39,4 +39,14 @@ model Card {
   updatedAt   DateTime? @updatedAt
   board       Board    @relation(fields: [board_id], references: [board_id])
   board_id    Int
+  comments    Comment[]
+}
+
+model Comment {
+  comment_id  Int      @id @default(autoincrement())
+  message     String
+  author      String?
+  createdAt   DateTime @default(now())
+  card        Card     @relation(fields: [card_id], references: [card_id], onDelete: Cascade)
+  card_id     Int
 }
