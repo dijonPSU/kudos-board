@@ -1,27 +1,38 @@
 import React, { useState } from 'react';
+import { useSearch } from './SearchContext.jsx';
 
 export default function Search() {
     const [search, setSearch] = useState('');
+    const { updateSearchQuery, clearSearchQuery } = useSearch();
 
     const handleSearch = (e) => {
         setSearch(e.target.value);
-        console.log(e.target.value);
+        if (e.target.value === '') {
+            clearSearchQuery();
+        }
     }
 
-    const handleSubmit = () => {
-        console.log("Submit clicked");
+    const handleSubmit = (e) => {
+        if (e && e.preventDefault) {
+            e.preventDefault();
+        }
+        updateSearchQuery(search);
     }
 
     const handleClear = () => {
         setSearch('');
-        console.log("Clear clicked");
+        clearSearchQuery();
     }
 
     return (
         <div className="search-bar">
-            <input value={search} onChange={handleSearch} placeholder="Search boards" />
-            <button onClick={handleSubmit}>Submit</button>
-            <button onClick={handleClear}>Clear</button>
+            <input
+                value={search}
+                onChange={handleSearch}
+                placeholder="Search boards by title"
+            />
+            <button onClick={handleSubmit}>Search</button>
+            <button onClick={handleClear} className="clear">Clear</button>
         </div>
     )
 }

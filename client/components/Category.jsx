@@ -1,19 +1,16 @@
-import { react } from 'react';
+import React from 'react';
 
-
-const Category = () => {
+const Category = ({ onCreateBoardClick }) => {
   return (
     <div className='categories'>
-        <button>All</button>
-        <button>Recent</button>
-        <button>Celebration</button>
-        <button>Thank You</button>
-        <button>Inspiration</button>
-        <button>Create a New Board</button>
+      <button>All</button>
+      <button>Recent</button>
+      <button>Celebration</button>
+      <button>Thank You</button>
+      <button>Inspiration</button>
+      <button onClick={onCreateBoardClick}>Create a New Board</button>
     </div>
   );
-}
-
-
+};
 
 export default Category;

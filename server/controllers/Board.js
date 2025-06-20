@@ -24,10 +24,10 @@ module.exports = {
         }
     },
 
-    async createBoard(name, category, author) {
+    async createBoard(title, category, author) {
         try {
-            console.log("Creating board with:", { name, category, author });
-            const board = await prisma.board.create({data: {title: name, category, owner: author }});
+            console.log("Creating board with:", { title, category, author });
+            const board = await prisma.board.create({data: {title, category, owner: author }});
             return board;
         } catch (error) {
             throw error;

@@ -30,9 +30,9 @@ server.get('/board/:id', async (req, res, next) => {
 })
 
 server.post('/board', async (req, res, next) => {
-    const { name, category, author } = req.body;
+    const { title, category, author } = req.body;
     try {
-        const board = await Board.createBoard(name, category, author || 'Anonymous');
+        const board = await Board.createBoard(title, category, author || 'Anonymous');
         return res.status(201).json(board);
     } catch (err) {
         console.error('Error creating board:', err);
