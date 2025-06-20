@@ -1,4 +1,5 @@
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
+import { Link } from 'react-router';
 import { getRequest, deleteRequest } from './webRequests';
 import { ViewBoard } from './Modal';
 import { useSearch } from './SearchContext.jsx';
@@ -37,14 +38,6 @@ const Cards = forwardRef((_, ref) => {
     handleBoardCreated
   }));
 
-  const handleViewBoard = (boardId) => {
-    const board = boards.find(b => b.board_id === boardId);
-    if (board) {
-      setSelectedBoard(board);
-      setShowViewModal(true);
-    }
-  };
-
   const handleCloseViewModal = () => {
     setShowViewModal(false);
     setSelectedBoard(null);
@@ -65,7 +58,6 @@ const Cards = forwardRef((_, ref) => {
   };
 
   const filteredBoards = boards.filter(board => {
-    // Skip undefined boards or boards without title
     if (!board || !board.title) return false;
 
     // Filter by search query
@@ -78,7 +70,6 @@ const Cards = forwardRef((_, ref) => {
 
     // Special handling for "Recent" category - show the 5 most recent boards
     if (selectedCategory === 'Recent') {
-      // We'll handle this after the initial filtering
       return matchesSearch;
     }
 
@@ -115,12 +106,14 @@ const Cards = forwardRef((_, ref) => {
             </div>
 
             <div className="card-buttons">
-              <button
-                className="cardButton"
-                onClick={() => handleViewBoard(board.board_id)}
+              <Link
+                to={`/board/${board.board_id}`}
+                className="cardButton-container"
               >
-                View Board
-              </button>
+                <button className="cardButton">
+                  View Board
+                </button>
+              </Link>
               <button
                 className="cardButton"
                 onClick={() => handleDeleteBoard(board.board_id)}

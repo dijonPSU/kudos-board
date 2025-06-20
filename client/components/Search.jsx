@@ -23,12 +23,19 @@ export default function Search() {
         setSearch('');
         clearSearchQuery();
     }
+    
+    const onEnter = (e) => {
+        if (e.key === 'Enter') {
+            handleSubmit();
+        }
+    }
 
     return (
         <div className="search-bar">
             <input
                 value={search}
                 onChange={handleSearch}
+                onKeyPress={onEnter}
                 placeholder="Search boards by title"
             />
             <button onClick={handleSubmit}>Search</button>

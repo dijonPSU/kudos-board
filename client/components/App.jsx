@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react'
+import { Routes, Route, useLocation } from 'react-router'
 import './App.css'
 import Header from '../components/Header'
 import Cards from "./Boards"
+import BoardDetails from './BoardDetails'
 import Footer from "../components/Footer"
 import { CreateBoard } from './Modal'
 import { SearchProvider } from './SearchContext.jsx'
@@ -9,6 +11,8 @@ import { SearchProvider } from './SearchContext.jsx'
 function App() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const cardsRef = useRef();
+  const location = useLocation();
+  const isViewingBoard = location.pathname.startsWith('/board/');
 
   const handleCreateBoardClick = () => {
     setShowCreateModal(true);
@@ -18,22 +22,26 @@ function App() {
     setShowCreateModal(false);
   };
 
-  // This function will be passed to the CreateBoard modal
+
   const handleAddBoard = (newBoard) => {
-    // We'll manually update the boards state in the Cards component
     if (cardsRef.current && cardsRef.current.handleBoardCreated) {
       cardsRef.current.handleBoardCreated(newBoard);
     } else {
-      console.log('Cards ref or handleBoardCreated not available:', newBoard);
+      console.log('handleBoardCreated not available:', newBoard);
     }
   };
 
   return (
     <SearchProvider>
-      <div className="App">
-        <Header onCreateBoardClick={handleCreateBoardClick} />
-        <Cards ref={cardsRef} />
-        <Footer />
+      <div className={`App ${isViewingBoard ? 'full-page-view' : ''}`}>
+        {!isViewingBoard && <Header onCreateBoardClick={handleCreateBoardClick} />}
+
+        <Routes>
+          <Route path="/" element={<Cards ref={cardsRef} />} />
+          <Route path="/board/:boardId" element={<BoardDetails />} />
+        </Routes>
+
+        {!isViewingBoard && <Footer />}
 
         {showCreateModal && (
           <CreateBoard
