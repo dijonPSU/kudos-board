@@ -1,3 +1,5 @@
+import { baseURL } from "../src/global";
+
 const getRequest = async (url) => {
     try {
         const response = await fetch(url);
