@@ -1,5 +1,5 @@
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { getRequest, deleteRequest } from './webRequests';
 import { ViewBoard } from './Modal';
 import { baseURL } from '../src/global.js';

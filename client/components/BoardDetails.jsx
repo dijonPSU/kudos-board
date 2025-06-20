@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router';
+import { useParams, Link } from 'react-router-dom';
 import { getRequest, postRequest, putRequest, deleteRequest } from './webRequests';
 import './BoardDetails.css';
 import { baseURL } from '../src/global.js';

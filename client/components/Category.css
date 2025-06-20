@@ -8,8 +8,8 @@
 
 .categories button {
   padding: 8px 16px;
-  background-color: var(--button-background);
-  border: 1px solid var(--card-border);
+  background-color: #636161;
+  border: 1px solid #ddd;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
@@ -18,19 +18,18 @@
 
 
 .categories button {
-    color: var(--button-text);
+    color: white
 }
 
 .search-bar button {
-    color: var(--button-text);
+    color:white
 }
 .categories button:hover {
-  background-color: var(--hover-color);
-  opacity: 0.8;
+  background-color: #e0e0e0;
 }
 
 .no-cards{
-    color: var(--text-color);
+    color: black
 }
 
 .categories button.active {
