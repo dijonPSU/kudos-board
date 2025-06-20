@@ -1,8 +1,8 @@
 import { baseURL } from "../src/global";
 
-const getRequest = async (url) => {
+const getRequest = async (endpoint) => {
     try {
-        const response = await fetch(url);
+        const response = await fetch(`${baseURL}${endpoint}`);
         const data = await response.json();
         return data;
     } catch (err) {
@@ -11,9 +11,9 @@ const getRequest = async (url) => {
     }
 };
 
-const postRequest = async (url, body) => {
+const postRequest = async (endpoint, body) => {
     try {
-        const response = await fetch(url, {
+        const response = await fetch(`${baseURL}${endpoint}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,9 +28,9 @@ const postRequest = async (url, body) => {
     }
 };
 
-const putRequest = async (url, body) => {
+const putRequest = async (endpoint, body) => {
     try {
-        const response = await fetch(url, {
+        const response = await fetch(`${baseURL}${endpoint}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,9 +46,9 @@ const putRequest = async (url, body) => {
 };
 
 
-const deleteRequest = async (url) => {
+const deleteRequest = async (endpoint) => {
     try {
-        const response = await fetch(url, {
+        const response = await fetch(`${baseURL}${endpoint}`, {
             method: 'DELETE',
         });
         return response.ok;

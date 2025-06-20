@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "build": "prisma generate",
     "start": "node --env-file=.env index.js",
     "server": "node --watch index.js"
   },

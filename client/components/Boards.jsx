@@ -19,7 +19,7 @@ const Cards = forwardRef((_, ref) => {
 
   const fetchBoards = async () => {
     try {
-      const data = await getRequest(`${baseURL}/boards`);
+      const data = await getRequest('/');
       setBoards(data);
       setLoading(false);
     } catch (err) {
@@ -46,7 +46,7 @@ const Cards = forwardRef((_, ref) => {
 
   const handleDeleteBoard = async (boardId) => {
     try {
-      const success = await deleteRequest(`${baseURL}/board/${boardId}`);
+      const success = await deleteRequest(`/board/${boardId}`);
 
       if (success) {
         setBoards(prevBoards => prevBoards.filter(board => board.board_id !== boardId));

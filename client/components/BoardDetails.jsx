@@ -27,7 +27,7 @@ const BoardDetails = () => {
 
     const fetchBoardDetails = async () => {
         try {
-            const data = await getRequest(`${baseURL}/board/${boardId}`);
+            const data = await getRequest(`/board/${boardId}`);
             setBoard(data);
             setLoading(false);
         } catch (err) {
@@ -39,7 +39,7 @@ const BoardDetails = () => {
 
     const handleUpvoteCard = async (cardId) => {
         try {
-            await putRequest(`${baseURL}/card/${cardId}/upvote`);
+            await putRequest(`/card/${cardId}/upvote`);
             setBoard(prevBoard => {
                 const updatedCards = prevBoard.cards.map(card => {
                     if (card.card_id === cardId) {
@@ -57,7 +57,7 @@ const BoardDetails = () => {
     const handlePinCard = async (cardId, isPinned) => {
         try {
             const endpoint = isPinned ? 'unpin' : 'pin';
-            await putRequest(`${baseURL}/card/${cardId}/${endpoint}`);
+            await putRequest(`/card/${cardId}/${endpoint}`);
 
             // update board state
             setBoard(prevBoard => {
@@ -94,7 +94,7 @@ const BoardDetails = () => {
 
     const handleDeleteCard = async (cardId) => {
         try {
-            await deleteRequest(`${baseURL}/card/${cardId}`);
+            await deleteRequest(`/card/${cardId}`);
             setBoard(prevBoard => {
                 const updatedCards = prevBoard.cards.filter(card => card.card_id !== cardId);
                 return { ...prevBoard, cards: updatedCards };
@@ -134,7 +134,7 @@ const BoardDetails = () => {
         }
 
         try {
-            const newCard = await postRequest(`${baseURL}/card`, {
+            const newCard = await postRequest(`/card`, {
                 title: newCardTitle,
                 description: newCardDescription,
                 gif: newCardGif,
