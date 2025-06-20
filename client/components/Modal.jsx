@@ -65,7 +65,7 @@ const CreateBoard = ({ onClose, onBoardCreated }) => {
     setIsSubmitting(true);
 
     try {
-      const newBoard = await postRequest('http://localhost:3000/board', formData);
+      const newBoard = await postRequest(`${baseURL}/board`, formData);
       if (newBoard) {
         onBoardCreated(newBoard);
         onClose();

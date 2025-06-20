@@ -2,6 +2,7 @@ import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'rea
 import { Link } from 'react-router';
 import { getRequest, deleteRequest } from './webRequests';
 import { ViewBoard } from './Modal';
+import { baseURL } from '../src/global.js';
 import { useSearch } from './SearchContext.jsx';
 
 const Cards = forwardRef((_, ref) => {
@@ -18,7 +19,7 @@ const Cards = forwardRef((_, ref) => {
 
   const fetchBoards = async () => {
     try {
-      const data = await getRequest("http://localhost:3000/");
+      const data = await getRequest(`${baseURL}/boards`);
       setBoards(data);
       setLoading(false);
     } catch (err) {
@@ -45,7 +46,7 @@ const Cards = forwardRef((_, ref) => {
 
   const handleDeleteBoard = async (boardId) => {
     try {
-      const success = await deleteRequest(`http://localhost:3000/board/${boardId}`);
+      const success = await deleteRequest(`${baseURL}/board/${boardId}`);
 
       if (success) {
         setBoards(prevBoards => prevBoards.filter(board => board.board_id !== boardId));

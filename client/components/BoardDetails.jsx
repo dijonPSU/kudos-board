@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router';
 import { getRequest, postRequest, putRequest, deleteRequest } from './webRequests';
 import './BoardDetails.css';
+import { baseURL } from './App';
 
 const GIPHY_API_KEY = 'snp2aFURx0Xl1SiINTH19NRDAA1fu26H';
 
@@ -26,7 +27,7 @@ const BoardDetails = () => {
 
     const fetchBoardDetails = async () => {
         try {
-            const data = await getRequest(`http://localhost:3000/board/${boardId}`);
+            const data = await getRequest(`${baseURL}/board/${boardId}`);
             setBoard(data);
             setLoading(false);
         } catch (err) {
@@ -38,7 +39,7 @@ const BoardDetails = () => {
 
     const handleUpvoteCard = async (cardId) => {
         try {
-            await putRequest(`http://localhost:3000/card/${cardId}/upvote`);
+            await putRequest(`${baseURL}/card/${cardId}/upvote`);
             setBoard(prevBoard => {
                 const updatedCards = prevBoard.cards.map(card => {
                     if (card.card_id === cardId) {
@@ -56,7 +57,7 @@ const BoardDetails = () => {
     const handlePinCard = async (cardId, isPinned) => {
         try {
             const endpoint = isPinned ? 'unpin' : 'pin';
-            await putRequest(`http://localhost:3000/card/${cardId}/${endpoint}`);
+            await putRequest(`${baseURL}/card/${cardId}/${endpoint}`);
 
             // update board state
             setBoard(prevBoard => {
@@ -93,7 +94,7 @@ const BoardDetails = () => {
 
     const handleDeleteCard = async (cardId) => {
         try {
-            await deleteRequest(`http://localhost:3000/card/${cardId}`);
+            await deleteRequest(`${baseURL}/card/${cardId}`);
             setBoard(prevBoard => {
                 const updatedCards = prevBoard.cards.filter(card => card.card_id !== cardId);
                 return { ...prevBoard, cards: updatedCards };
@@ -133,7 +134,7 @@ const BoardDetails = () => {
         }
 
         try {
-            const newCard = await postRequest('http://localhost:3000/card', {
+            const newCard = await postRequest(`${baseURL}/card`, {
                 title: newCardTitle,
                 description: newCardDescription,
                 gif: newCardGif,
