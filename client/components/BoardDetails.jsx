@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getRequest, postRequest, putRequest, deleteRequest } from './webRequests';
 import './BoardDetails.css';
-import { baseURL } from '../src/global.js';
 
 const GIPHY_API_KEY = 'snp2aFURx0Xl1SiINTH19NRDAA1fu26H';
 

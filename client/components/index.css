@@ -148,9 +148,14 @@ header {
   margin-top: auto;
 }
 
-.cardButton{
+a {
   text-decoration: none;
 }
+
+.cardButton-container {
+  text-decoration: none;
+}
+
 
 .card-button{
   display: flex;
