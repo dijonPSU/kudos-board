@@ -4,7 +4,7 @@ import { ViewBoard } from './Modal';
 import { useSearch } from './SearchContext.jsx';
 
 const Cards = forwardRef((_, ref) => {
-  const { searchQuery } = useSearch();
+  const { searchQuery, selectedCategory } = useSearch();
   const [boards, setBoards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,7 +32,7 @@ const Cards = forwardRef((_, ref) => {
     setBoards(prevBoards => [...prevBoards, newBoard]);
   };
 
- 
+
   useImperativeHandle(ref, () => ({
     handleBoardCreated
   }));
@@ -64,21 +64,48 @@ const Cards = forwardRef((_, ref) => {
     }
   };
 
-  const filteredBoards = boards.filter(board =>
-    board &&
-    board.title &&
-    (searchQuery === '' || board.title.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const filteredBoards = boards.filter(board => {
+    // Skip undefined boards or boards without title
+    if (!board || !board.title) return false;
+
+    // Filter by search query
+    const matchesSearch = searchQuery === '' ||
+      board.title.toLowerCase().includes(searchQuery.toLowerCase());
+
+    // Filter by category
+    const matchesCategory = selectedCategory === 'All' ||
+      (selectedCategory === 'Recent' ? true : board.category === selectedCategory);
+
+    // Special handling for "Recent" category - show the 5 most recent boards
+    if (selectedCategory === 'Recent') {
+      // We'll handle this after the initial filtering
+      return matchesSearch;
+    }
+
+    return matchesSearch && matchesCategory;
+  });
+
+  // Special handling for "Recent" category - limit to 5 most recent boards
+  const finalFilteredBoards = selectedCategory === 'Recent'
+    ? filteredBoards.slice(0, 5) // Assuming boards are already sorted by recency
+    : filteredBoards;
 
   if (loading) return <div>Loading boards...</div>;
   if (error) return <div>{error}</div>;
-  if (boards.length === 0 || filteredBoards.length === 0) return <div className="no-boards">No boards found. Create a new board to get started!</div>;
+  if (boards.length === 0) return <div className="no-boards">No boards found. Create a new board to get started!</div>;
+  if (finalFilteredBoards.length === 0) {
+    if (searchQuery) {
+      return <div className="no-boards">No boards match your search criteria. Try a different search term or category.</div>;
+    } else {
+      return <div className="no-boards">No boards found in the "{selectedCategory}" category.</div>;
+    }
+  }
 
 
   return (
     <>
       <div className="card-container">
-        {filteredBoards.map((board) => (
+        {finalFilteredBoards.map((board) => (
           <div className="card" key={board.board_id || `board-${Math.random()}`}>
             <img src="https://picsum.photos/200/" alt="Board thumbnail" />
             <div className="card-info">
