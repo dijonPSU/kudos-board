@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const server = express();
 const Board = require('./Board');
+const Card = require('./Card');
 
 server.use(express.json());
 server.use(cors());
@@ -54,10 +55,41 @@ server.delete('/board/:id', async (req, res, next) => {
 server.get('/cards/:id', async (req, res, next) => {
     const { id } = req.params;
     try {
-        const cards = await Board.getCardsByBoardId(id);
+        const cards = await Card.getCardsByBoardId(id);
         return res.status(200).json(cards);
     } catch (err) {
         next({status: 500, message: 'Error getting cards'});
+    }
+})
+
+server.post('/card', async (req, res, next) => {
+    const { title, description, gif, owner, board_id } = req.body;
+    try {
+        const card = await Card.createCard(title, description, gif, owner || 'Anonymous', board_id);
+        return res.status(201).json(card);
+    } catch (err) {
+        console.error('Error creating card:', err);
+        next({status: 500, message: err.message || 'Error creating card'});
+    }
+})
+
+server.put('/card/:id/upvote', async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const card = await Card.upvoteCard(id);
+        return res.status(200).json(card);
+    } catch (err) {
+        next({status: 500, message: 'Error upvoting card'});
+    }
+})
+
+server.delete('/card/:id', async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const card = await Card.deleteCard(id);
+        return res.status(200).json(card);
+    } catch (err) {
+        next({status: 500, message: 'Error deleting card'});
     }
 })
 

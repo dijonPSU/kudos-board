@@ -44,7 +44,7 @@ module.exports = {
             console.error("Error in deleteBoard:", error);
             throw error;
         }
-    }
+    },
 
 
 }
