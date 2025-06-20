@@ -7,6 +7,7 @@ import BoardDetails from './BoardDetails'
 import Footer from "../components/Footer"
 import { CreateBoard } from './Modal'
 import { SearchProvider } from './SearchContext.jsx'
+import { ThemeProvider } from './ThemeContext.jsx'
 
 function App() {
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -32,25 +33,27 @@ function App() {
   };
 
   return (
-    <SearchProvider>
-      <div className={`App ${isViewingBoard ? 'full-page-view' : ''}`}>
-        {!isViewingBoard && <Header onCreateBoardClick={handleCreateBoardClick} />}
+    <ThemeProvider>
+      <SearchProvider>
+        <div className={`App ${isViewingBoard ? 'full-page-view' : ''}`}>
+          {!isViewingBoard && <Header onCreateBoardClick={handleCreateBoardClick} />}
 
-        <Routes>
-          <Route path="/" element={<Cards ref={cardsRef} />} />
-          <Route path="/board/:boardId" element={<BoardDetails />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<Cards ref={cardsRef} />} />
+            <Route path="/board/:boardId" element={<BoardDetails />} />
+          </Routes>
 
-        {!isViewingBoard && <Footer />}
+          {!isViewingBoard && <Footer />}
 
-        {showCreateModal && (
-          <CreateBoard
-            onClose={handleCloseModal}
-            onBoardCreated={handleAddBoard}
-          />
-        )}
-      </div>
-    </SearchProvider>
+          {showCreateModal && (
+            <CreateBoard
+              onClose={handleCloseModal}
+              onBoardCreated={handleAddBoard}
+            />
+          )}
+        </div>
+      </SearchProvider>
+    </ThemeProvider>
   )
 }
 

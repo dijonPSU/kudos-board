@@ -165,9 +165,7 @@ const BoardDetails = () => {
     return (
         <div className="board-details-container">
             <div className="board-details">
-                <h1>{board.title}</h1>
-                <h3>Category: {board.category}</h3>
-                {board.owner && <p>Created by: {board.owner}</p>}
+
 
                 <div className="board-actions">
                     <button

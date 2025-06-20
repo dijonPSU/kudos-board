@@ -8,16 +8,29 @@
 
 .categories button {
   padding: 8px 16px;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
+  background-color: var(--button-background);
+  border: 1px solid var(--card-border);
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
   transition: all 0.2s ease;
 }
 
+
+.categories button {
+    color: var(--button-text);
+}
+
+.search-bar button {
+    color: var(--button-text);
+}
 .categories button:hover {
-  background-color: #e0e0e0;
+  background-color: var(--hover-color);
+  opacity: 0.8;
+}
+
+.no-cards{
+    color: var(--text-color);
 }
 
 .categories button.active {
