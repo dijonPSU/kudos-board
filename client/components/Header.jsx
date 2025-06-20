@@ -7,7 +7,6 @@ const Header = ({ onCreateBoardClick }) => {
   return (
     <header>
       <div className="banner">
-        <img src="./src/assets/react.svg" alt="react-logo" />
         <h1>Kudos Board</h1>
         <ThemeToggle />
       </div>

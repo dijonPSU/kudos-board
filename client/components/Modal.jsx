@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { postRequest } from './webRequests';
 import './Modal.css';
+import { baseURL } from '../src/global.js';
 
 const ViewBoard = ({ board, onClose }) => {
   return (
