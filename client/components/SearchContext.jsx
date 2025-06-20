@@ -20,7 +20,6 @@ export const SearchProvider = ({ children }) => {
         setSelectedCategory(category);
     };
 
-    // Value object to be provided
     const value = {
         searchQuery,
         updateSearchQuery,

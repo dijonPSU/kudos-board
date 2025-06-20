@@ -68,7 +68,6 @@ const Cards = forwardRef((_, ref) => {
     const matchesCategory = selectedCategory === 'All' ||
       (selectedCategory === 'Recent' ? true : board.category === selectedCategory);
 
-    // Special handling for "Recent" category - show the 5 most recent boards
     if (selectedCategory === 'Recent') {
       return matchesSearch;
     }
@@ -76,9 +75,9 @@ const Cards = forwardRef((_, ref) => {
     return matchesSearch && matchesCategory;
   });
 
-  // Special handling for "Recent" category - limit to 5 most recent boards
+
   const finalFilteredBoards = selectedCategory === 'Recent'
-    ? filteredBoards.slice(0, 5) // Assuming boards are already sorted by recency
+    ? filteredBoards.slice(0, 5) 
     : filteredBoards;
 
   if (loading) return <div>Loading boards...</div>;
@@ -98,7 +97,7 @@ const Cards = forwardRef((_, ref) => {
       <div className="card-container">
         {finalFilteredBoards.map((board) => (
           <div className="card" key={board.board_id || `board-${Math.random()}`}>
-            <img src="https://picsum.photos/200/" alt="Board thumbnail" />
+            <img src="https://picsum.photos/200/${}" alt="Board thumbnail" />
             <div className="card-info">
               <h2>{board.title}</h2>
               <h3>{board.category}</h3>
