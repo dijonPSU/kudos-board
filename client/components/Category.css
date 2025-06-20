@@ -27,7 +27,7 @@
 }
 
 .categories button.create-board {
-  background-color: #28a745;
+  background-color: #1d8636;
   color: white;
   border-color: #28a745;
 }
@@ -37,7 +37,7 @@
   border-color: #1e7e34;
 }
 
-/* Responsive styles */
+
 @media (max-width: 768px) {
   .categories {
     flex-direction: column;

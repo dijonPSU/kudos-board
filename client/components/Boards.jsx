@@ -77,7 +77,7 @@ const Cards = forwardRef((_, ref) => {
 
 
   const finalFilteredBoards = selectedCategory === 'Recent'
-    ? filteredBoards.slice(0, 5) 
+    ? filteredBoards.slice(0, 5)
     : filteredBoards;
 
   if (loading) return <div>Loading boards...</div>;
@@ -97,7 +97,7 @@ const Cards = forwardRef((_, ref) => {
       <div className="card-container">
         {finalFilteredBoards.map((board) => (
           <div className="card" key={board.board_id || `board-${Math.random()}`}>
-            <img src="https://picsum.photos/200/${}" alt="Board thumbnail" />
+            <img src={`https://picsum.photos/${board.board_id + 200}`} alt="Board thumbnail" />
             <div className="card-info">
               <h2>{board.title}</h2>
               <h3>{board.category}</h3>
@@ -105,16 +105,10 @@ const Cards = forwardRef((_, ref) => {
             </div>
 
             <div className="card-buttons">
-              <Link
-                to={`/board/${board.board_id}`}
-                className="cardButton-container"
-              >
-                <button className="cardButton">
-                  View Board
-                </button>
+              <Link to={`/board/${board.board_id}`} className="cardButton-container">
+                <button className="cardButton">View Board</button>
               </Link>
-              <button
-                className="cardButton"
+              <button className="cardButton"
                 onClick={() => handleDeleteBoard(board.board_id)}
               >
                 Delete Board

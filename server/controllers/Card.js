@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 module.exports = {
     async getCards(){
-        const cards = await prisma.cards.findMany();
+        const cards = await prisma.card.findMany();
         return cards;
 
     },
@@ -11,7 +11,12 @@ module.exports = {
     async getCardsByBoardId(boardId) {
         try {
             const cards = await prisma.card.findMany({
-                where: { board_id: parseInt(boardId) }
+                where: { board_id: parseInt(boardId) },
+                orderBy: [
+                    { isPinned: 'desc' },
+                    { pinnedAt: 'desc' },
+                    { createdAt: 'desc' }
+                ]
             });
             return cards;
         } catch (error) {
@@ -69,7 +74,37 @@ module.exports = {
             console.error("Error in deleteCard:", error);
             throw error;
         }
+    },
+
+    async pinCard(id) {
+        try {
+            const card = await prisma.card.update({
+                where: { card_id: parseInt(id) },
+                data: {
+                    isPinned: true,
+                    pinnedAt: new Date()
+                }
+            });
+            return card;
+        } catch (error) {
+            console.error("Error in pinCard:", error);
+            throw error;
+        }
+    },
+
+    async unpinCard(id) {
+        try {
+            const card = await prisma.card.update({
+                where: { card_id: parseInt(id) },
+                data: {
+                    isPinned: false,
+                    pinnedAt: null
+                }
+            });
+            return card;
+        } catch (error) {
+            console.error("Error in unpinCard:", error);
+            throw error;
+        }
     }
-
-
 }

@@ -53,6 +53,44 @@ const BoardDetails = () => {
         }
     };
 
+    const handlePinCard = async (cardId, isPinned) => {
+        try {
+            const endpoint = isPinned ? 'unpin' : 'pin';
+            await putRequest(`http://localhost:3000/card/${cardId}/${endpoint}`);
+
+            // update board state
+            setBoard(prevBoard => {
+                const updatedCards = prevBoard.cards.map(card => {
+                    if (card.card_id === cardId) {
+                        return {
+                            ...card,
+                            isPinned: !isPinned,
+                            pinnedAt: !isPinned ? new Date().toISOString() : null
+                        };
+                    }
+                    return card;
+                });
+
+                // sort cards to show pinned cards at the top
+                const sortedCards = [...updatedCards].sort((a, b) => {
+                    if (a.isPinned && !b.isPinned) return -1;
+                    if (!a.isPinned && b.isPinned) return 1;
+                    if (a.isPinned && b.isPinned) {
+
+                        // sort pinned cards by pinnedAt
+                        return new Date(b.pinnedAt) - new Date(a.pinnedAt);
+                    }
+                    // sort unpinned cards by createdAt
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                });
+
+                return { ...prevBoard, cards: sortedCards };
+            });
+        } catch (err) {
+            console.error(`Error ${isPinned ? 'unpinning' : 'pinning'} card:`, err);
+        }
+    };
+
     const handleDeleteCard = async (cardId) => {
         try {
             await deleteRequest(`http://localhost:3000/card/${cardId}`);
@@ -227,7 +265,7 @@ const BoardDetails = () => {
                     {board.cards && board.cards.length > 0 ? (
                         <div className="cards-grid">
                             {board.cards.map((card) => (
-                                <div key={card.card_id} className="card-item">
+                                <div key={card.card_id} className={`card-item ${card.isPinned ? 'pinned' : ''}`}>
                                     <h3>{card.title}</h3>
                                     <div className="card-gif">
                                         <img src={card.gif} alt="Card GIF" />
@@ -244,12 +282,21 @@ const BoardDetails = () => {
                                             </button>
                                             <span className="vote-count">{card.votes || 0}</span>
                                         </div>
-                                        <button
-                                            className="delete-button"
-                                            onClick={() => handleDeleteCard(card.card_id)}
-                                        >
-                                            Delete
-                                        </button>
+                                        <div className="card-buttons">
+                                            <button
+                                                className={`pin-button ${card.isPinned ? 'pinned' : ''}`}
+                                                onClick={() => handlePinCard(card.card_id, card.isPinned)}
+                                                title={card.isPinned ? "Unpin card" : "Pin card"}
+                                            >
+                                                📌
+                                            </button>
+                                            <button
+                                                className="delete-button"
+                                                onClick={() => handleDeleteCard(card.card_id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             ))}

@@ -83,6 +83,26 @@ server.put('/card/:id/upvote', async (req, res, next) => {
     }
 })
 
+server.put('/card/:id/pin', async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const card = await Card.pinCard(id);
+        return res.status(200).json(card);
+    } catch (err) {
+        next({status: 500, message: 'Error pinning card'});
+    }
+})
+
+server.put('/card/:id/unpin', async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const card = await Card.unpinCard(id);
+        return res.status(200).json(card);
+    } catch (err) {
+        next({status: 500, message: 'Error unpinning card'});
+    }
+})
+
 server.delete('/card/:id', async (req, res, next) => {
     const { id } = req.params;
     try {

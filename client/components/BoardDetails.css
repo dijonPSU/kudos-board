@@ -41,7 +41,6 @@
   margin: 2rem 0;
 }
 
-/* Card Grid Styling */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -56,7 +55,30 @@
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+.card-item.pinned {
+  background-color: #fff8e1;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  border: 2px solid #ffd54f;
+}
+
+.card-item.pinned::before {
+  content: "📌";
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #ffd54f;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .card-item:hover {
@@ -103,6 +125,11 @@
   margin-top: auto;
 }
 
+.card-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .upvote-section {
   display: flex;
   align-items: center;
@@ -123,6 +150,31 @@
 
 .vote-count {
   font-weight: bold;
+}
+
+.pin-button {
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+.pin-button:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.1);
+}
+
+.pin-button.pinned {
+  background-color: #ffd54f;
+  color: #333;
+}
+
+.pin-button.pinned:hover {
+  background-color: #ffca28;
 }
 
 .delete-button {
@@ -147,7 +199,7 @@
   margin-top: 2rem;
 }
 
-/* Board Actions */
+
 .board-actions {
   margin: 2rem 0;
   display: flex;
@@ -184,7 +236,7 @@
   background-color: #3a7bc8;
 }
 
-/* New Card Form */
+
 .new-card-form {
   background-color: #f9f9f9;
   border-radius: 8px;
